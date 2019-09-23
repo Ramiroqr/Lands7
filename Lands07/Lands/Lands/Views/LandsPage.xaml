@@ -6,11 +6,64 @@
              Title="Lands">
     <ContentPage.Content>
         <StackLayout
-            BindingContext="{Binding Lands}">
-            <Label
-                FontSize="Large"
-                Text="Lands Page">
-            </Label>
+            BindingContext="{Binding Lands}"
+            Padding="5">
+            <SearchBar
+                BackgroundColor="BurlyWood"
+                HeightRequest="42"
+                Text="{Binding Filter, Mode=TwoWay}"
+                Placeholder="Search..."
+                SearchCommand="{Binding SearchCommand}">
+                
+            </SearchBar>
+            <ListView
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                ItemsSource="{Binding Lands}"
+                RefreshCommand="{Binding RefreshCommand}"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame
+                                Padding="5"
+                                CornerRadius="10"
+                                HasShadow="True"
+                                Margin="5">
+                                <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectLandCommand}"/>
+                                </Grid.GestureRecognizers>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
+                                    Grid.Column="0"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding Name}"
+                                        TextColor="Black">
+                                    </Label>
+                                    <Label
+                                        Text="{Binding Capital}"
+                                        TextColor="Black">
+                                    </Label>
+                                </StackLayout>
+                                <Image
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    Source="ic_chevron_right">
+                                </Image>
+                            </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
